@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Programs | HumanCare NGO</title>
-    <link rel="stylesheet" href="../CSS_File/style.css">
+    <title>Events | HumanCare NGO</title>
+    <link rel="stylesheet" href="CSS_File/style.css">
 </head>
 <body>
 
@@ -21,19 +21,11 @@
 </nav>
 
 <section class="section">
-    <h2>Our Programs</h2>
-
-    <div class="accordion" onclick="toggleAccordion(this)">
-        Emergency Response
-    </div>
-    <div class="panel">Immediate assistance during disasters and emergencies.</div>
-
-    <div class="accordion" onclick="toggleAccordion(this)">
-        Blood Donation Drives
-    </div>
-    <div class="panel">Organized blood donation events to save lives.</div>
-
+    <h2>Upcoming Events</h2>
+    <input type="text" id="searchEvent" placeholder="Search event..." onkeyup="filterEvents()">
+    <ul id="eventList"></ul>
 </section>
+
 
 <footer>  
     <div class="footer-bottom">
@@ -42,6 +34,8 @@
     </div>
 </footer>
 
-<script src="../Script_File/script.js"></script>
+
+<link rel="stylesheet" href="CSS_File/style.css">
+<script src="Script_File/script.js"></script>
 </body>
 </html>
