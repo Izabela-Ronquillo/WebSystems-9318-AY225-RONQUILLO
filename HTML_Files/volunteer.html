@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Volunteer | HumanCare NGO</title>
+    <link rel="stylesheet" href="../CSS_File/style.css">
+</head>
+<body>
+
+<nav>
+    <h2>HumanCare NGO</h2>
+    <div class="links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="programs.html">Programs</a>
+        <a href="events.html">Events</a>
+        <a href="volunteer.html">Volunteer</a>
+        <a href="contacts.html">Contact Us</a>
+    </div>
+</nav>
+
+<section class="section">
+    <h2>Volunteer Registration</h2>
+    <p>Join our community of volunteers and make a real impact in people's lives.</p>
+
+    <!-- Progress Indicator -->
+    <div class="progress-indicator">
+        <div class="progress-bar" id="formProgress"></div>
+    </div>
+
+    <!-- Previous Registration Alert -->
+    <div id="previousRegistration" style="display: none;"></div>
+
+    <form id="volunteerForm" data-local-only="true">
+        <div class="form-group">
+            <label for="name">Full Name *</label>
+            <input type="text" id="name" placeholder="Enter your full name" required autocomplete="name">
+            <span class="error-message">Please enter your full name</span>
+        </div>
+        
+        <div class="form-group">
+            <label for="email">Email Address *</label>
+            <input type="email" id="email" placeholder="your.email@example.com" required autocomplete="email">
+            <span class="error-message">Please enter a valid email address</span>
+        </div>
+        
+        <div class="form-group">
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" placeholder="+63 (XXX) XXX-XXXX" autocomplete="tel">
+            <span class="error-message">Please enter a valid phone number</span>
+        </div>
+        
+        <div class="form-group">
+            <label for="age">Age *</label>
+            <input type="number" id="age" placeholder="Your age" min="16" max="100" required>
+            <span class="error-message">You must be at least 16 years old</span>
+        </div>
+        
+        <div class="form-group">
+            <label for="address">Address</label>
+            <input type="text" id="address" placeholder="City, Region, Philippines" autocomplete="street-address">
+        </div>
+        
+        <div class="form-group">
+            <label for="interests">Primary Area of Interest *</label>
+            <select id="interests" required>
+                <option value="">Select an area</option>
+                <option value="Emergency Response">Emergency Response</option>
+                <option value="Blood Donation">Blood Donation</option>
+                <option value="Medical Missions">Medical Missions</option>
+                <option value="Community Health">Community Health</option>
+                <option value="Health Education">Health Education</option>
+                <option value="Fundraising & Events">Fundraising & Events</option>
+                <option value="Administrative Support">Administrative Support</option>
+            </select>
+            <span class="error-message">Please select an area of interest</span>
+        </div>
+        
+        <div class="form-group">
+            <label>Additional Skills (Select all that apply)</label>
+            <div class="checkbox-group">
+                <div class="checkbox-item">
+                    <input type="checkbox" id="skill_firstaid" value="First Aid">
+                    <label for="skill_firstaid">First Aid</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="skill_cpr" value="CPR">
+                    <label for="skill_cpr">CPR</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="skill_medical" value="Medical Background">
+                    <label for="skill_medical">Medical Background</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="skill_languages" value="Multilingual">
+                    <label for="skill_languages">Multilingual</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="skill_driving" value="Driving License">
+                    <label for="skill_driving">Driving License</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="skill_tech" value="Technical Skills">
+                    <label for="skill_tech">Technical Skills</label>
+                </div>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label for="availability">Availability *</label>
+            <select id="availability" required>
+                <option value="">Select your availability</option>
+                <option value="Weekdays">Weekdays</option>
+                <option value="Weekends">Weekends</option>
+                <option value="Both Weekdays & Weekends">Both Weekdays & Weekends</option>
+                <option value="Flexible">Flexible</option>
+                <option value="On-Call/Emergency Only">On-Call/Emergency Only</option>
+            </select>
+            <span class="error-message">Please select your availability</span>
+        </div>
+        
+        <div class="form-group">
+            <label for="hoursPerWeek">Hours Available Per Week</label>
+            <select id="hoursPerWeek">
+                <option value="">Select hours</option>
+                <option value="1-5 hours">1-5 hours</option>
+                <option value="6-10 hours">6-10 hours</option>
+                <option value="11-20 hours">11-20 hours</option>
+                <option value="20+ hours">20+ hours</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label for="experience">Previous Volunteer Experience</label>
+            <textarea id="experience" placeholder="Tell us about your previous volunteer experience (optional)" rows="4"></textarea>
+        </div>
+        
+        <div class="form-group">
+            <label for="motivation">Why do you want to volunteer with us?</label>
+            <textarea id="motivation" placeholder="Share your motivation (optional)" rows="3"></textarea>
+        </div>
+        
+        <div class="btn-group">
+            <button type="submit" class="btn btn-primary">📝 Register as Volunteer</button>
+            <button type="button" onclick="loadSavedData()" class="btn btn-secondary">💾 Load Saved Data</button>
+            <button type="button" onclick="clearForm()" class="btn btn-tertiary">🗑️ Clear Form</button>
+        </div>
+    </form>
+
+    <div id="msg" style="display: none; margin-top: 20px;"></div>
+
+    <!-- Download Section -->
+    <div class="download-section" id="downloadSection" style="display: none;">
+        <h3 style="color: #c62828; margin-bottom: 15px;">📥 Download Your Registrations</h3>
+        <p style="margin-bottom: 15px;">Export your volunteer registration data as CSV or JSON file for your records. Files are generated locally on your device.</p>
+        <div class="btn-group">
+            <button onclick="downloadCSV()" class="btn btn-success">📊 Download as CSV</button>
+            <button onclick="downloadJSON()" class="btn btn-secondary">📄 Download as JSON</button>
+        </div>
+    </div>
+
+    <!-- Saved Registrations Display -->
+    <div id="savedRegistrationsSection" style="margin-top: 50px; display: none;">
+        <h3 style="color: #c62828; font-size: 28px; margin-bottom: 20px;">📋 Your Previous Registrations (Stored Locally)</h3>
+        <div id="savedRegistrationsList"></div>
+        <div class="btn-group" style="margin-top: 20px;">
+            <button onclick="clearAllRegistrations()" class="btn" style="background: linear-gradient(135deg, #e53935 0%, #c62828 100%);">🗑️ Clear All Registrations</button>
+            <button onclick="emailRegistrations()" class="btn btn-secondary">📧 Email Registrations</button>
+        </div>
+    </div>
+
+    <!-- Statistics Section -->
+    <div class="stats-grid" style="margin-top: 50px;">
+        <div class="stat-box">
+            <h2 id="totalVolunteers" style="color: aliceblue;">500+</h2>
+            <p>Active Volunteers</p>
+        </div>
+        <div class="stat-box">
+            <h2 id="hoursServed" style="color: aliceblue;">10,000+</h2>
+            <p>Hours Served</p>
+        </div>
+        <div class="stat-box">
+            <h2 id="projectsCompleted" style="color: aliceblue;">150+</h2>
+            <p>Projects Completed</p>
+        </div>
+        <div class="stat-box">
+            <h2 id="yourRegistrations" style="color: aliceblue;">0</h2>
+            <p>Your Registrations</p>
+        </div>
+    </div>
+
+    <!-- Benefits Section -->
+    <div style="margin-top: 50px;">
+        <h3 style="color: #c62828; font-size: 28px; margin-bottom: 20px;">✨ Volunteer Benefits</h3>
+        <div class="card-grid">
+            <div class="card">
+                <h3>🎓 Training & Development</h3>
+                <p>Receive comprehensive training in emergency response, first aid, and community health.</p>
+            </div>
+            <div class="card">
+                <h3>🤝 Community Impact</h3>
+                <p>Make a real difference in people's lives and contribute to your community.</p>
+            </div>
+            <div class="card">
+                <h3>📜 Certificate of Service</h3>
+                <p>Receive official recognition for your volunteer hours and contributions.</p>
+            </div>
+            <div class="card">
+                <h3>🌟 Networking</h3>
+                <p>Connect with like-minded individuals and build lasting friendships.</p>
+            </div>
+            <div class="card">
+                <h3>💼 Career Development</h3>
+                <p>Gain valuable experience and skills that enhance your professional profile.</p>
+            </div>
+            <div class="card">
+                <h3>🏥 Health & Wellness</h3>
+                <p>Access to health screenings and wellness programs for active volunteers.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer>  
+    <div class="footer-bottom">
+        <p>&copy; 2025 HumanCare NGO. All rights reserved.</p>
+        <p>Inspired by humanitarian organizations worldwide | <a href="contacts.html">Contact Us</a></p>
+    </div>
+</footer>
+
+<script src="../Script_File/script.js"></script>
+<script>
+    
+window.addEventListener('DOMContentLoaded', function() {
+    console.log('🔒 Privacy: All data stored locally only');
+    checkPreviousRegistration();
+    displaySavedRegistrations();
+    updateRegistrationCount();
+    updateDownloadSection();
+    setupAutoSave();
+    loadFormProgress();
+    addFormValidation();
+    addPhoneNumberRestriction();
+});
+
+// ===== Phone Number Restriction (11 digits, numbers only) =====
+function addPhoneNumberRestriction() {
+    const phoneInput = document.getElementById('phone');
+    
+    if (phoneInput) {
+        phoneInput.addEventListener('input', function(e) {
+            // Remove all non-numeric characters
+            let value = this.value.replace(/\D/g, '');
+            
+            // Limit to 11 digits
+            if (value.length > 11) {
+                value = value.slice(0, 11);
+            }
+            
+            // Update the input value
+            this.value = value;
+            
+            // Real-time validation feedback
+            const formGroup = this.closest('.form-group');
+            if (value.length > 0 && value.length !== 11) {
+                formGroup.classList.add('error');
+                const errorMsg = formGroup.querySelector('.error-message');
+                if (errorMsg) {
+                    errorMsg.textContent = `Phone must be exactly 11 digits (currently ${value.length})`;
+                }
+            } else {
+                formGroup.classList.remove('error');
+                const errorMsg = formGroup.querySelector('.error-message');
+                if (errorMsg) {
+                    errorMsg.textContent = 'Please enter a valid phone number';
+                }
+            }
+        });
+        
+        // Prevent non-numeric input
+        phoneInput.addEventListener('keypress', function(e) {
+            const char = String.fromCharCode(e.which);
+            if (!/[0-9]/.test(char)) {
+                e.preventDefault();
+            }
+        });
+        
+        // Prevent paste of non-numeric content
+        phoneInput.addEventListener('paste', function(e) {
+            e.preventDefault();
+            const pastedData = (e.clipboardData || window.clipboardData).getData('text');
+            const numericOnly = pastedData.replace(/\D/g, '').slice(0, 11);
+            this.value = numericOnly;
+            
+            // Trigger input event for validation
+            const event = new Event('input', { bubbles: true });
+            this.dispatchEvent(event);
+        });
+    }
+}
+
+function setupAutoSave() {
+    const formInputs = document.querySelectorAll('#volunteerForm input, #volunteerForm select, #volunteerForm textarea');
+    formInputs.forEach(input => {
+        input.addEventListener('input', function() {
+            saveFormProgress();
+            updateFormProgress();
+        });
+    });
+}
+
+function saveFormProgress() {
+    const formData = {
+        name: document.getElementById('name').value,
+        email: document.getElementById('email').value,
+        phone: document.getElementById('phone').value,
+        age: document.getElementById('age').value,
+        address: document.getElementById('address').value,
+        interests: document.getElementById('interests').value,
+        availability: document.getElementById('availability').value,
+        hoursPerWeek: document.getElementById('hoursPerWeek').value,
+        experience: document.getElementById('experience').value,
+        motivation: document.getElementById('motivation').value,
+        skills: getSelectedSkills()
+    };
+    sessionStorage.setItem('volunteerFormProgress', JSON.stringify(formData));
+}
+
+function loadFormProgress() {
+    const savedProgress = sessionStorage.getItem('volunteerFormProgress');
+    if (savedProgress) {
+        const data = JSON.parse(savedProgress);
+        document.getElementById('name').value = data.name || '';
+        document.getElementById('email').value = data.email || '';
+        document.getElementById('phone').value = data.phone || '';
+        document.getElementById('age').value = data.age || '';
+        document.getElementById('address').value = data.address || '';
+        document.getElementById('interests').value = data.interests || '';
+        document.getElementById('availability').value = data.availability || '';
+        document.getElementById('hoursPerWeek').value = data.hoursPerWeek || '';
+        document.getElementById('experience').value = data.experience || '';
+        document.getElementById('motivation').value = data.motivation || '';
+        
+        if (data.skills && Array.isArray(data.skills)) {
+            data.skills.forEach(skill => {
+                const checkbox = Array.from(document.querySelectorAll('.checkbox-item input[type="checkbox"]'))
+                    .find(cb => cb.value === skill);
+                if (checkbox) checkbox.checked = true;
+            });
+        }
+        
+        updateFormProgress();
+    }
+}
+
+function updateFormProgress() {
+    const requiredFields = document.querySelectorAll('#volunteerForm [required]');
+    let filledFields = 0;
+    
+    requiredFields.forEach(field => {
+        if (field.value.trim() !== '') {
+            filledFields++;
+        }
+    });
+    
+    const progress = (filledFields / requiredFields.length) * 100;
+    document.getElementById('formProgress').style.width = progress + '%';
+}
+
+function addFormValidation() {
+    const nameInput = document.getElementById('name');
+    const emailInput = document.getElementById('email');
+    const phoneInput = document.getElementById('phone');
+    const ageInput = document.getElementById('age');
+    
+    nameInput.addEventListener('blur', function() {
+        validateName(this);
+    });
+    
+    emailInput.addEventListener('blur', function() {
+        validateEmail(this);
+    });
+    
+    // Real-time email validation
+    emailInput.addEventListener('input', function() {
+        const formGroup = this.closest('.form-group');
+        if (this.value.trim().length > 0) {
+            validateEmail(this);
+        } else {
+            formGroup.classList.remove('error');
+        }
+    });
+    
+    phoneInput.addEventListener('blur', function() {
+        if (this.value.trim() !== '') {
+            validatePhone(this);
+        }
+    });
+    
+    ageInput.addEventListener('blur', function() {
+        validateAge(this);
+    });
+}
+
+function validateName(input) {
+    const formGroup = input.closest('.form-group');
+    const errorMsg = formGroup.querySelector('.error-message');
+    
+    if (input.value.trim().length < 2) {
+        formGroup.classList.add('error');
+        if (errorMsg) errorMsg.textContent = 'Please enter your full name (at least 2 characters)';
+        return false;
+    } else {
+        formGroup.classList.remove('error');
+        return true;
+    }
+}
+
+function validateEmail(input) {
+    const formGroup = input.closest('.form-group');
+    const errorMsg = formGroup.querySelector('.error-message');
+    const email = input.value.trim();
+    
+    // Comprehensive email validation
+    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    
+    // Additional checks
+    const hasAtSymbol = email.includes('@');
+    const parts = email.split('@');
+    const hasDomain = parts.length === 2 && parts[1].includes('.');
+    const validFormat = emailRegex.test(email);
+    
+    if (!email) {
+        formGroup.classList.add('error');
+        if (errorMsg) errorMsg.textContent = 'Email is required';
+        return false;
+    } else if (!hasAtSymbol) {
+        formGroup.classList.add('error');
+        if (errorMsg) errorMsg.textContent = 'Email must contain @ symbol';
+        return false;
+    } else if (!hasDomain) {
+        formGroup.classList.add('error');
+        if (errorMsg) errorMsg.textContent = 'Email must have a valid domain (e.g., @gmail.com)';
+        return false;
+    } else if (!validFormat) {
+        formGroup.classList.add('error');
+        if (errorMsg) errorMsg.textContent = 'Please enter a valid email address';
+        return false;
+    } else if (email.length < 6) {
+        formGroup.classList.add('error');
+        if (errorMsg) errorMsg.textContent = 'Email address is too short';
+        return false;
+    } else {
+        formGroup.classList.remove('error');
+        if (errorMsg) errorMsg.textContent = 'Please enter a valid email address';
+        return true;
+    }
+}
+
+function validatePhone(input) {
+    const formGroup = input.closest('.form-group');
+    const errorMsg = formGroup.querySelector('.error-message');
+    const phone = input.value.trim();
+    
+    // Phone is optional, but if provided must be exactly 11 digits
+    if (phone === '') {
+        formGroup.classList.remove('error');
+        return true;
+    }
+    
+    // Check if only numbers
+    if (!/^\d+$/.test(phone)) {
+        formGroup.classList.add('error');
+        if (errorMsg) errorMsg.textContent = 'Phone must contain only numbers';
+        return false;
+    }
+    
+    // Check if exactly 11 digits
+    if (phone.length !== 11) {
+        formGroup.classList.add('error');
+        if (errorMsg) errorMsg.textContent = `Phone must be exactly 11 digits (currently ${phone.length})`;
+        return false;
+    }
+    
+    formGroup.classList.remove('error');
+    return true;
+}
+
+function validateAge(input) {
+    const formGroup = input.closest('.form-group');
+    const errorMsg = formGroup.querySelector('.error-message');
+    const age = parseInt(input.value);
+    
+    if (isNaN(age) || age < 16 || age > 100) {
+        formGroup.classList.add('error');
+        if (errorMsg) {
+            if (isNaN(age)) {
+                errorMsg.textContent = 'Please enter a valid age';
+            } else if (age < 16) {
+                errorMsg.textContent = 'You must be at least 16 years old';
+            } else {
+                errorMsg.textContent = 'Please enter a valid age';
+            }
+        }
+        return false;
+    } else {
+        formGroup.classList.remove('error');
+        return true;
+    }
+}
+
+function getSelectedSkills() {
+    const skills = [];
+    document.querySelectorAll('.checkbox-item input[type="checkbox"]:checked').forEach(checkbox => {
+        skills.push(checkbox.value);
+    });
+    return skills;
+}
+
+function checkPreviousRegistration() {
+    const lastRegistration = localStorage.getItem('lastVolunteerRegistration');
+    if (lastRegistration) {
+        const data = JSON.parse(lastRegistration);
+        const registrationDate = new Date(data.registrationDate);
+        const daysSince = Math.floor((new Date() - registrationDate) / (1000 * 60 * 60 * 24));
+        
+        const alertDiv = document.getElementById('previousRegistration');
+        alertDiv.style.display = 'block';
+        alertDiv.className = 'alert alert-info';
+        alertDiv.innerHTML = `
+            <h3 style="margin-bottom: 10px;">👋 Welcome Back, ${data.name}!</h3>
+            <p style="margin: 5px 0;">You registered ${daysSince} day(s) ago for <strong>${data.interests}</strong>.</p>
+            <p style="margin: 5px 0;">Email: ${data.email}</p>
+            <button onclick="loadLastRegistration()" class="btn btn-secondary" style="margin-top: 10px; padding: 8px 20px; font-size: 14px;">Use Previous Info</button>
+        `;
+    }
+}
+
+function loadLastRegistration() {
+    const lastRegistration = localStorage.getItem('lastVolunteerRegistration');
+    if (lastRegistration) {
+        const data = JSON.parse(lastRegistration);
+        document.getElementById('name').value = data.name || '';
+        document.getElementById('email').value = data.email || '';
+        document.getElementById('phone').value = data.phone || '';
+        document.getElementById('age').value = data.age || '';
+        document.getElementById('address').value = data.address || '';
+        document.getElementById('interests').value = data.interests || '';
+        document.getElementById('availability').value = data.availability || '';
+        document.getElementById('hoursPerWeek').value = data.hoursPerWeek || '';
+        document.getElementById('experience').value = data.experience || '';
+        document.getElementById('motivation').value = data.motivation || '';
+        
+        if (data.skills && Array.isArray(data.skills)) {
+            // Clear all checkboxes first
+            document.querySelectorAll('.checkbox-item input[type="checkbox"]').forEach(cb => {
+                cb.checked = false;
+            });
+            
+            // Check the saved skills
+            data.skills.forEach(skill => {
+                const checkbox = Array.from(document.querySelectorAll('.checkbox-item input[type="checkbox"]'))
+                    .find(cb => cb.value === skill);
+                if (checkbox) checkbox.checked = true;
+            });
+        }
+        
+        updateFormProgress();
+        alert('✅ Previous data loaded from local storage!');
+    }
+}
+
+function loadSavedData() {
+    const saved = localStorage.getItem('lastVolunteerRegistration');
+    if (saved) {
+        loadLastRegistration();
+    } else {
+        alert('ℹ️ No saved data found in local storage.');
+    }
+}
+
+function clearForm() {
+    if (confirm('Are you sure you want to clear the form?')) {
+        document.getElementById('volunteerForm').reset();
+        sessionStorage.removeItem('volunteerFormProgress');
+        const msg = document.getElementById('msg');
+        msg.textContent = '';
+        msg.style.display = 'none';
+        document.querySelectorAll('.form-group').forEach(group => {
+            group.classList.remove('error');
+        });
+        updateFormProgress();
+        alert('✅ Form cleared successfully!');
+    }
+}
+
+function displaySavedRegistrations() {
+    const allRegistrations = JSON.parse(localStorage.getItem('allVolunteerRegistrations')) || [];
+    
+    if (allRegistrations.length > 0) {
+        const section = document.getElementById('savedRegistrationsSection');
+        const list = document.getElementById('savedRegistrationsList');
+        section.style.display = 'block';
+        
+        list.innerHTML = allRegistrations.map((reg, index) => {
+            const skillsHTML = reg.skills && reg.skills.length > 0 
+                ? `<div class="skill-tags">${reg.skills.map(skill => `<span class="skill-tag">${skill}</span>`).join('')}</div>`
+                : '';
+            
+            return `
+                <div class="registration-card">
+                    <div class="registration-header">
+                        <h3 style="color: #c62828; margin: 0;">Registration #${index + 1}</h3>
+                        <button onclick="deleteRegistration(${index})" class="btn" style="padding: 8px 15px; font-size: 14px; background: linear-gradient(135deg, #e53935 0%, #c62828 100%);">🗑️ Delete</button>
+                    </div>
+                    <div class="registration-info">
+                        <p><strong>Name:</strong> ${reg.name}</p>
+                        <p><strong>Email:</strong> ${reg.email}</p>
+                        <p><strong>Phone:</strong> ${reg.phone || 'Not provided'}</p>
+                        <p><strong>Age:</strong> ${reg.age || 'Not provided'}</p>
+                        <p><strong>Address:</strong> ${reg.address || 'Not provided'}</p>
+                        <p><strong>Interest:</strong> ${reg.interests}</p>
+                        <p><strong>Availability:</strong> ${reg.availability || 'Not specified'}</p>
+                        <p><strong>Hours/Week:</strong> ${reg.hoursPerWeek || 'Not specified'}</p>
+                        ${skillsHTML}
+                        <p><strong>Registered:</strong> ${new Date(reg.registrationDate).toLocaleString()}</p>
+                    </div>
+                </div>
+            `;
+        }).join('');
+    } else {
+        document.getElementById('savedRegistrationsSection').style.display = 'none';
+    }
+}
+
+function deleteRegistration(index) {
+    if (confirm('Are you sure you want to delete this registration?')) {
+        const allRegistrations = JSON.parse(localStorage.getItem('allVolunteerRegistrations')) || [];
+        allRegistrations.splice(index, 1);
+        localStorage.setItem('allVolunteerRegistrations', JSON.stringify(allRegistrations));
+        
+        displaySavedRegistrations();
+        updateRegistrationCount();
+        updateDownloadSection();
+        alert('✅ Registration deleted!');
+    }
+}
+
+function clearAllRegistrations() {
+    if (confirm('⚠️ Delete ALL registrations from local storage? This cannot be undone.')) {
+        localStorage.removeItem('allVolunteerRegistrations');
+        localStorage.removeItem('lastVolunteerRegistration');
+        document.getElementById('savedRegistrationsSection').style.display = 'none';
+        updateRegistrationCount();
+        updateDownloadSection();
+        alert('✅ All registrations cleared!');
+        location.reload();
+    }
+}
+
+function updateRegistrationCount() {
+    const allRegistrations = JSON.parse(localStorage.getItem('allVolunteerRegistrations')) || [];
+    document.getElementById('yourRegistrations').textContent = allRegistrations.length;
+}
+
+function updateDownloadSection() {
+    const allRegistrations = JSON.parse(localStorage.getItem('allVolunteerRegistrations')) || [];
+    const downloadSection = document.getElementById('downloadSection');
+    downloadSection.style.display = allRegistrations.length > 0 ? 'block' : 'none';
+}
+
+function downloadCSV() {
+    const allRegistrations = JSON.parse(localStorage.getItem('allVolunteerRegistrations')) || [];
+    
+    if (allRegistrations.length === 0) {
+        alert('No registrations to download.');
+        return;
+    }
+    
+    const headers = ['Registration Date','Name','Email','Phone','Age','Address','Primary Interest','Skills','Availability','Hours Per Week','Experience','Motivation'];
+    let csvContent = headers.join(',') + '\n';
+    
+    allRegistrations.forEach(reg => {
+        const row = [
+            new Date(reg.registrationDate).toLocaleString(),
+            `"${reg.name}"`,
+            reg.email,
+            reg.phone || '',
+            reg.age || '',
+            `"${reg.address || ''}"`,
+            reg.interests,
+            `"${reg.skills ? reg.skills.join('; ') : ''}"`,
+            reg.availability || '',
+            reg.hoursPerWeek || '',
+            `"${(reg.experience || '').replace(/"/g, '""')}"`,
+            `"${(reg.motivation || '').replace(/"/g, '""')}"`
+        ];
+        csvContent += row.join(',') + '\n';
+    });
+    
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    const url = URL.createObjectURL(blob);
+    const timestamp = new Date().toISOString().split('T')[0];
+    
+    link.setAttribute('href', url);
+    link.setAttribute('download', `volunteer_registrations_${timestamp}.csv`);
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    
+    alert('✅ CSV file downloaded!');
+}
+
+function downloadJSON() {
+    const allRegistrations = JSON.parse(localStorage.getItem('allVolunteerRegistrations')) || [];
+    
+    if (allRegistrations.length === 0) {
+        alert('No registrations to download.');
+        return;
+    }
+    
+    const jsonContent = JSON.stringify(allRegistrations, null, 2);
+    const blob = new Blob([jsonContent], { type: 'application/json' });
+    const link = document.createElement('a');
+    const url = URL.createObjectURL(blob);
+    const timestamp = new Date().toISOString().split('T')[0];
+    
+    link.setAttribute('href', url);
+    link.setAttribute('download', `volunteer_registrations_${timestamp}.json`);
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    
+    alert('✅ JSON file downloaded!');
+}
+
+function emailRegistrations() {
+    const allRegistrations = JSON.parse(localStorage.getItem('allVolunteerRegistrations')) || [];
+    
+    if (allRegistrations.length === 0) {
+        alert('No registrations to email.');
+        return;
+    }
+    
+    let emailBody = 'VOLUNTEER REGISTRATIONS\n\n';
+    
+    allRegistrations.forEach((reg, index) => {
+        emailBody += `Registration #${index + 1}\n`;
+        emailBody += `Date: ${new Date(reg.registrationDate).toLocaleString()}\n`;
+        emailBody += `Name: ${reg.name}\n`;
+        emailBody += `Email: ${reg.email}\n`;
+        emailBody += `Phone: ${reg.phone || 'N/A'}\n`;
+        emailBody += `Age: ${reg.age || 'N/A'}\n`;
+        emailBody += `Address: ${reg.address || 'N/A'}\n`;
+        emailBody += `Interest: ${reg.interests}\n`;
+        emailBody += `Skills: ${reg.skills ? reg.skills.join(', ') : 'N/A'}\n`;
+        emailBody += `Availability: ${reg.availability || 'N/A'}\n`;
+        emailBody += `Hours/Week: ${reg.hoursPerWeek || 'N/A'}\n`;
+        emailBody += `\n---\n\n`;
+    });
+    
+    const subject = 'My Volunteer Registrations';
+    const mailtoLink = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(emailBody)}`;
+    window.location.href = mailtoLink;
+}
+
+// ===== FORM SUBMISSION HANDLER =====
+const volunteerForm = document.getElementById('volunteerForm');
+if (volunteerForm) {
+    volunteerForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Comprehensive validation
+        let isValid = true;
+        let errorMessages = [];
+        
+        // Validate Name
+        const nameInput = document.getElementById('name');
+        if (!validateName(nameInput)) {
+            isValid = false;
+            errorMessages.push('Valid full name is required');
+        }
+        
+        // Validate Email
+        const emailInput = document.getElementById('email');
+        if (!validateEmail(emailInput)) {
+            isValid = false;
+            errorMessages.push('Valid email address is required');
+        }
+        
+        // Validate Phone (if provided)
+        const phoneInput = document.getElementById('phone');
+        if (phoneInput.value.trim() !== '' && !validatePhone(phoneInput)) {
+            isValid = false;
+            errorMessages.push('Phone must be exactly 11 digits (numbers only)');
+        }
+        
+        // Validate Age
+        const ageInput = document.getElementById('age');
+        if (!validateAge(ageInput)) {
+            isValid = false;
+            errorMessages.push('Valid age (16-100) is required');
+        }
+        
+        // Validate Interests
+        const interestsInput = document.getElementById('interests');
+        if (!interestsInput.value) {
+            isValid = false;
+            errorMessages.push('Please select an area of interest');
+            interestsInput.closest('.form-group').classList.add('error');
+        } else {
+            interestsInput.closest('.form-group').classList.remove('error');
+        }
+        
+        // Validate Availability
+        const availabilityInput = document.getElementById('availability');
+        if (!availabilityInput.value) {
+            isValid = false;
+            errorMessages.push('Please select your availability');
+            availabilityInput.closest('.form-group').classList.add('error');
+        } else {
+            availabilityInput.closest('.form-group').classList.remove('error');
+        }
+        
+        if (!isValid) {
+            const msg = document.getElementById('msg');
+            msg.className = 'alert alert-error';
+            msg.style.display = 'block';
+            msg.innerHTML = `
+                <strong>⚠️ Please fix the following errors:</strong><br>
+                ${errorMessages.map(err => `• ${err}`).join('<br>')}
+            `;
+            msg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            return;
+        }
+        
+        // All validation passed - prepare form data
+        const formData = {
+            name: nameInput.value.trim(),
+            email: emailInput.value.trim(),
+            phone: phoneInput.value.trim(),
+            age: ageInput.value.trim(),
+            address: document.getElementById('address').value.trim(),
+            interests: interestsInput.value,
+            skills: getSelectedSkills(),
+            availability: availabilityInput.value,
+            hoursPerWeek: document.getElementById('hoursPerWeek').value,
+            experience: document.getElementById('experience').value.trim(),
+            motivation: document.getElementById('motivation').value.trim(),
+            registrationDate: new Date().toISOString()
+        };
+        
+        // Save to localStorage
+        localStorage.setItem('lastVolunteerRegistration', JSON.stringify(formData));
+        
+        const allRegistrations = JSON.parse(localStorage.getItem('allVolunteerRegistrations')) || [];
+        allRegistrations.push(formData);
+        localStorage.setItem('allVolunteerRegistrations', JSON.stringify(allRegistrations));
+        
+        sessionStorage.removeItem('volunteerFormProgress');
+        
+        const msg = document.getElementById('msg');
+        msg.className = 'alert alert-success';
+        msg.style.display = 'block';
+        msg.innerHTML = `
+            <strong>✅ Registration Successful!</strong><br>
+            Thank you, ${formData.name}! We'll contact you at ${formData.email} soon.<br>
+            <small>🔒 Your registration is saved locally on your device only.</small>
+        `;
+        
+        volunteerForm.reset();
+        document.querySelectorAll('.form-group').forEach(group => {
+            group.classList.remove('error');
+        });
+        updateFormProgress();
+        
+        displaySavedRegistrations();
+        updateRegistrationCount();
+        updateDownloadSection();
+        
+        msg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        
+        setTimeout(() => {
+            msg.style.display = 'none';
+        }, 10000);
+    });
+}
+
+console.log('%c🔒 PRIVACY', 'font-weight: bold; color: #4caf50;');
+console.log('All data stored ONLY in browser localStorage.');
+console.log('NO server, database, or GitHub uploads.');
+</script>
+</body>
+</html>
